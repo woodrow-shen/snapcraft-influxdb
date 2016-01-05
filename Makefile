@@ -4,7 +4,7 @@ export GOPATH=$(PWD)/parts/influxdb
 all:
 	@echo $(GOPATH)
 	mkdir -p $(GOPATH)/src/github.com/influxdb
-	cd $(GOPATH)/src/github.com/influxdb && git clone git@github.com:influxdb/influxdb.git
+	cd $(GOPATH)/src/github.com/influxdb && git clone https://github.com/influxdata/influxdb.git
 	#cd $(GOPATH)/src/github.com/influxdb/influxdb && git checkout v0.9.6.1
 	cd $(GOPATH)/src/github.com/influxdb/influxdb && go get -u -f -t ./...
 	cd $(GOPATH)/src/github.com/influxdb/influxdb && go clean ./...
