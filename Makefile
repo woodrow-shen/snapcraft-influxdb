@@ -5,7 +5,7 @@ all:
 	@echo $(GOPATH)
 	go get github.com/sparrc/gdm
 	go get github.com/influxdata/influxdb
-	cd $(GOPATH)/src/github.com/influxdata/influxdb && gdm restore
+	cd $(GOPATH)/src/github.com/influxdata/influxdb && $(GOPATH)/bin/gdm restore
 	cd $(GOPATH)/src/github.com/influxdata/influxdb && go get ./...
 	cd $(GOPATH)/src/github.com/influxdata/influxdb && go install ./...
 install:
