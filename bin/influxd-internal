@@ -1,0 +1,20 @@
+#!/bin/sh
+
+mkdir -p $SNAP_COMMON/etc/influxdb/
+mkdir -p $SNAP_COMMON/var/
+mkdir -p $SNAP_COMMON/usr/share/collectd/
+
+export PATH="$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
+export LD_LIBRARY_PATH=$SNAP_LIBRARY_PATH:$LD_LIBRARY_PATH
+
+cp -n $SNAP/etc/influxdb/influxdb.conf $SNAP_COMMON/etc/influxdb/influxdb.conf
+cp -n $SNAP/usr/share/collectd/types.db $SNAP_COMMON/usr/share/collectd/types.db
+
+SNAP_DATA_ESCAPE=$(echo $SNAP_DATA | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g')
+sed -i "s/SNAP_DATA/$SNAP_DATA_ESCAPE/g" $SNAP_COMMON/etc/influxdb/influxdb.conf
+SNAP_COMMON_ESCAPE=$(echo $SNAP_COMMON | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g')
+sed -i "s/SNAP_COMMON/$SNAP_COMMON_ESCAPE/g" $SNAP_COMMON/etc/influxdb/influxdb.conf
+SNAP_ESCAPE=$(echo $SNAP | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g')
+sed -i "s/SNAP/$SNAP_ESCAPE/g" $SNAP_COMMON/etc/influxdb/influxdb.conf
+
+exec "$SNAP/bin/influxd" -config=$SNAP_COMMON/etc/influxdb/influxdb.conf "$@"

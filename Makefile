@@ -1,21 +1,16 @@
 # -*- Mode: Makefile; indent-tabs-mode:t; tab-width: 4 -*-
-export GOPATH=$(PWD)/parts/influxdb
+export GOPATH=$(PWD)/gocodez
 
 all:
 	@echo $(GOPATH)
-	mkdir -p $(GOPATH)/src/github.com/influxdb
-	cd $(GOPATH)/src/github.com/influxdb && git clone git@github.com:influxdb/influxdb.git
-	cd $(GOPATH)/src/github.com/influxdb/influxdb && git checkout v0.9.6.1
-	cd $(GOPATH)/src/github.com/influxdb/influxdb && go get -u -f -t ./...
-	cd $(GOPATH)/src/github.com/influxdb/influxdb && go clean ./...
-	cd $(GOPATH)/src/github.com/influxdb/influxdb && go install ./...
+	go get github.com/sparrc/gdm
+	go get github.com/influxdata/influxdb
+	cd $(GOPATH)/src/github.com/influxdata/influxdb && gdm restore
+	cd $(GOPATH)/src/github.com/influxdata/influxdb && go get ./...
+	cd $(GOPATH)/src/github.com/influxdata/influxdb && go install ./...
 install:
-	mkdir -p $(DESTDIR)/bin/
-	mkdir -p $(DESTDIR)/etc/
-	cp bin/start-service.sh $(DESTDIR)/bin/
-	cp -r etc/* $(DESTDIR)/etc/
-	cp $(GOPATH)/bin/influxd $(DESTDIR)/bin/
-	cp types.db $(DESTDIR)
+	mkdir -p $(SNAPCRAFT_PART_INSTALL)/bin/
+	cp gocodez/bin/influxd $(SNAPCRAFT_PART_INSTALL)/bin/
 clean:
 	snapcraft clean
 	rm *.snap
