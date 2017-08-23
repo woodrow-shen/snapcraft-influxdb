@@ -2,21 +2,16 @@
 
 The purpose is to use [snapcraft](https://developer.ubuntu.com/en/snappy/build-apps/snapcraft-advanced-features/) to build the influxdb as snap package.  
 
+<p align="center">
+<a href="https://build.snapcraft.io/user/woodrow-shen/snapcraft-influxdb"><img src="https://build.snapcraft.io/badge/woodrow-shen/snapcraft-influxdb.svg" alt="Snap Status"></a>
+</p>
+
 ## Requirement
 
-You need to have a go 1.5.2 environment by using gvm for go version control:
-```bash
-bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-source ./.gvm/scripts/gvm
-gvm install go1.4
-gvm use go1.4
-gvm install go1.5.2
-gvm use go1.5.2 --default
-```
+You need to have a go 1.8.3 environment by using gvm for go version control.
 
 Importantly, installing snapcraft:
 ```bash
-sudo add-apt-repository ppa:snappy-dev/tools
 sudo apt-get update
 sudo apt-get install snapcraft
 ```
@@ -31,11 +26,3 @@ Run `snapcraft` to build a snap.
 snapcraft clean
 snapcraft
 ```
-
-## snapcraft commands
-
-`snapcraft pull`: get source  
-`snapcraft build`: build parts  
-`snapcraft stage`: put parts into staging area  
-`snapcraft snap`: put parts into snap area  
-`snapcraft all`: make a snap package  
